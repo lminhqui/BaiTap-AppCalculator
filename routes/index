@@ -1,0 +1,39 @@
+var express = require('express');
+var router = express.Router();
+var math = require('mathjs');
+const stringIncludes = require('string-includes');
+
+/* GET home page. */
+router.get('/', function (req, res, next) {
+  res.render('index', {
+    title: 'Calculator',
+    result: 0,
+    code:200
+  });
+});
+/* POST calculator */
+router.post('/cal', function (req, res, next) {
+  if(req.body.result==='undefined'){
+    res.render('index', {
+      title: 'Calculator',
+      result: "cccc ",
+      code:500
+    });
+  }
+  try {
+    res.render('index', {
+      title: 'Calculator',
+      result: math.evaluate(req.body.result),  // Call math to resolve value get from form
+      code: 200
+    });
+  } catch (error) {
+    res.render('index', {
+      title: 'Calculator',
+      result: "Undefined",
+      code:500
+    });
+  }
+ 
+});
+
+module.exports = router;
